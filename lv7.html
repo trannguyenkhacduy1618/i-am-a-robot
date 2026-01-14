@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 7</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="game">
+  <h3>LEVEL 7 – Verification</h3>
+  <p id="task"></p>
+
+  <button onclick="action()">ACTION</button>
+
+  <p id="status"></p>
+  <p id="timer"></p>
+
+  <div class="note">
+    🤖 Robot chỉ xác nhận khi TẤT CẢ điều kiện đều đúng.
+  </div>
+</div>
+
+<script>
+// sinh yêu cầu ngẫu nhiên
+const requiredClicks = Math.floor(Math.random() * 3) + 3; // 3–5 lần
+const timeLimit = 3000; // 3 giây cố định
+
+let count = 0;
+let startTime = null;
+let verified = false;
+
+document.getElementById("task").innerText =
+  `Click ${requiredClicks} lần trong ${timeLimit / 1000} giây`;
+
+function action() {
+  if (verified) return;
+
+  if (count === 0) {
+    startTime = performance.now();
+  }
+
+  count++;
+  document.getElementById("status").innerText =
+    `Đã click: ${count} / ${requiredClicks}`;
+
+  const now = performance.now();
+  const elapsed = Math.round(now - startTime);
+  document.getElementById("timer").innerText =
+    `⏱ ${elapsed} ms`;
+
+  // click quá số → fail
+  if (count > requiredClicks) {
+    fail("Sai số lần");
+    return;
+  }
+
+  // đủ số → kiểm tra thời gian
+  if (count === requiredClicks) {
+    if (elapsed <= timeLimit) {
+      verified = true;
+      alert("VERIFIED 🤖\nRobot xác nhận thành công");
+      location.href = "lv8.html";
+    } else {
+      fail("Quá thời gian");
+    }
+  }
+}
+
+function fail(reason) {
+  alert("FAILED ❌\n" + reason + "\nRobot reset");
+  reset();
+}
+
+function reset() {
+  count = 0;
+  startTime = null;
+  document.getElementById("status").innerText = "";
+  document.getElementById("timer").innerText = "";
+}
+</script>
+
+</body>
+</html>

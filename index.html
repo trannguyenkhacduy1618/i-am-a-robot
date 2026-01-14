@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 1</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="game">
+  <h3>LEVEL 1 – Classification</h3>
+  <p>Chọn ô KHÁC với các ô còn lại</p>
+
+  <div class="boxes">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </div>
+
+  <div class="note">
+    🤖 Robot chỉ so sánh thuộc tính, không suy đoán.
+  </div>
+</div>
+
+<script>
+const boxes = document.querySelectorAll(".box");
+
+// chọn ngẫu nhiên 1 ô là đúng
+const correctIndex = Math.floor(Math.random() * boxes.length);
+
+// gán thuộc tính cho robot
+boxes.forEach((box, index) => {
+  if (index === correctIndex) {
+    box.classList.add("correct");
+    box.onclick = () => location.href = "lv2.html";
+  } else {
+    box.onclick = () => alert("Sai. Robot không thấy sự khác biệt này.");
+  }
+});
+</script>
+
+</body>
+</html>

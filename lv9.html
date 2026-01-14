@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 9</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="game">
+<h3>LEVEL 9 – Order</h3>
+<p>Click các số theo thứ tự tăng dần</p>
+
+<div id="nums"></div>
+
+<div class="note">
+🤖 Robot chỉ chấp nhận thứ tự chuẩn.
+</div>
+</div>
+
+<script>
+let arr = [];
+let index = 0;
+
+function gen() {
+  arr = [1,2,3,4].sort(() => Math.random() - 0.5);
+  index = 0;
+  const box = document.getElementById("nums");
+  box.innerHTML = "";
+
+  arr.forEach(n => {
+    const b = document.createElement("button");
+    b.innerText = n;
+    b.onclick = () => pick(n);
+    box.appendChild(b);
+  });
+}
+
+function pick(n) {
+  if (n === index + 1) {
+    index++;
+    if (index === 4) location.href = "lv10.html";
+  } else {
+    alert("Sai thứ tự");
+    gen();
+  }
+}
+
+gen();
+</script>
+
+</body>
+</html>

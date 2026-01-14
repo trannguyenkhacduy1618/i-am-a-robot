@@ -1,0 +1,70 @@
+body {
+    font-family: monospace;
+    background: #0f0f0f;
+    color: #00ffcc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game {
+    border: 2px solid #00ffcc;
+    padding: 20px;
+    width: 380px;
+    text-align: center;
+}
+
+button {
+    background: black;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.box {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    border: 2px solid #333;
+    cursor: pointer;
+}
+
+.correct {
+    border-color: #00ffcc;
+}
+
+.note {
+    font-size: 13px;
+    margin-top: 15px;
+    color: #aaffee;
+}
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    margin-left: 10px;
+    background: black;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+}.range-wrap {
+  position: relative;
+  width: 260px;
+  margin: 20px auto;
+}
+
+.range-wrap input[type=range] {
+  width: 100%;
+}
+
+.green-zone {
+  position: absolute;
+  left: 156px;   /* 60% của 260px */
+  width: 26px;   /* 10% của 260px */
+  top: 8px;
+  height: 6px;
+  background: #00ff88;
+  border-radius: 4px;
+}

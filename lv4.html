@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 4</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="game">
+  <h3>LEVEL 4 – Memory</h3>
+  <p>Ghi nhớ chính xác thứ tự robot đã lưu</p>
+
+  <p id="seq"></p>
+  <button onclick="hide()">Ẩn</button>
+
+  <div id="choices" style="display:none">
+    <button onclick="pick('blue')">🔵</button>
+    <button onclick="pick('red')">🔴</button>
+    <button onclick="pick('green')">🟢</button>
+    <button onclick="pick('yellow')">🟡</button>
+  </div>
+
+  <div class="note">
+    🤖 Robot chỉ nhớ dữ liệu đã được ghi vào bộ nhớ.
+  </div>
+</div>
+
+<script>
+const colors = [
+  { key: "blue", icon: "🔵" },
+  { key: "red", icon: "🔴" },
+  { key: "green", icon: "🟢" },
+  { key: "yellow", icon: "🟡" }
+];
+
+// độ dài chuỗi ngẫu nhiên: 3–5
+const length = Math.floor(Math.random() * 3) + 3;
+
+// sinh chuỗi bộ nhớ
+const answer = [];
+for (let i = 0; i < length; i++) {
+  answer.push(colors[Math.floor(Math.random() * colors.length)]);
+}
+
+// hiển thị chuỗi
+document.getElementById("seq").innerText =
+  answer.map(c => c.icon).join(" ");
+
+let index = 0;
+
+function hide() {
+  document.getElementById("seq").innerText = "???";
+  document.getElementById("choices").style.display = "block";
+}
+
+function pick(c) {
+  if (c === answer[index].key) {
+    index++;
+    if (index === answer.length) {
+      location.href = "lv5.html";
+    }
+  } else {
+    alert("Sai. Robot không nhớ như con người.");
+    reset();
+  }
+}
+
+function reset() {
+  index = 0;
+  document.getElementById("choices").style.display = "none";
+  document.getElementById("seq").innerText =
+    answer.map(c => c.icon).join(" ");
+}
+</script>
+
+</body>
+</html>

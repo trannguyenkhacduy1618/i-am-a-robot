@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 3</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="game">
+  <h3>LEVEL 3 – Exact Input</h3>
+  <p>Nhập chính xác chuỗi sau:</p>
+
+  <p id="target" style="font-weight:bold"></p>
+
+  <input id="txt">
+  <button onclick="check()">OK</button>
+
+  <div class="note">
+    🤖 Robot so khớp ký tự từng chữ, không hiểu ý nghĩa.
+  </div>
+</div>
+
+<script>
+// danh sách mẫu câu (cố ý dài và dễ sai)
+const samples = [
+  "I AM A ROBOT",
+  "ROBOT DOES NOT THINK",
+  "HUMAN MAKES MISTAKES",
+  "MACHINE FOLLOWS RULES",
+  "ROBOT ONLY MATCHES TEXT",
+  "THIS IS EXACT INPUT TEST"
+];
+
+// chọn ngẫu nhiên 1 câu
+const targetText = samples[Math.floor(Math.random() * samples.length)];
+document.getElementById("target").innerText = targetText;
+
+function check() {
+  const userInput = document.getElementById("txt").value;
+
+  if (userInput === targetText) {
+    location.href = "lv4.html";
+  } else {
+    alert("Sai. Robot không chấp nhận gần đúng.");
+  }
+}
+</script>
+
+</body>
+</html>

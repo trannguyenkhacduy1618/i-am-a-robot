@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 2</title>
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.lights {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.light {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #333;
+}
+
+.red { background: red; }
+.yellow { background: gold; }
+.green { background: #00ff88; }
+
+.info {
+  margin-top: 10px;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+  <h3>LEVEL 2 – State Machine</h3>
+  <p>START → đợi đèn xanh → STOP</p>
+
+  <div class="lights">
+    <div class="row" id="red"></div>
+    <div class="row" id="yellow"></div>
+    <div class="row" id="green"></div>
+  </div>
+
+  <button onclick="start()">START</button>
+  <button onclick="stop()">STOP</button>
+  <button onclick="next()" id="nextBtn" style="display:none">NEXT LEVEL</button>
+
+  <div class="info" id="current"></div>
+  <div class="info" id="best"></div>
+  <div class="info" id="target"></div>
+
+  <div class="note">
+    🤖 Robot chỉ xác nhận hành động đúng trạng thái và thời điểm.
+  </div>
+</div>
+
+<script>
+const LIMIT = 500; // ms cần đạt
+
+let state = "idle";
+let greenTime = 0;
+let bestTime = null;
+
+// tạo đèn
+function createLights(id, color) {
+  const row = document.getElementById(id);
+  for (let i = 0; i < 5; i++) {
+    const d = document.createElement("div");
+    d.className = "light";
+    row.appendChild(d);
+  }
+}
+
+createLights("red");
+createLights("yellow");
+createLights("green");
+
+const redLights = document.querySelectorAll("#red .light");
+const yellowLights = document.querySelectorAll("#yellow .light");
+const greenLights = document.querySelectorAll("#green .light");
+
+document.getElementById("target").innerText =
+  `🎯 Thời gian yêu cầu: ≤ ${LIMIT} ms`;
+
+function start() {
+  resetLights();
+  state = "running";
+
+  redLights.forEach(l => l.classList.add("red"));
+
+  setTimeout(() => {
+    if (state !== "running") return;
+    yellowLights.forEach(l => l.classList.add("yellow"));
+  }, 1000);
+
+  setTimeout(() => {
+    if (state !== "running") return;
+    greenLights.forEach(l => l.classList.add("green"));
+    state = "ready";
+    greenTime = performance.now();
+  }, 2000);
+}
+
+function stop() {
+  if (state !== "ready") {
+    alert("Sai trạng thái → thử lại");
+    reset();
+    return;
+  }
+
+  const reaction = Math.round(performance.now() - greenTime);
+  document.getElementById("current").innerText =
+    `⏱ Lần này: ${reaction} ms`;
+
+  if (bestTime === null || reaction < bestTime) {
+    bestTime = reaction;
+    document.getElementById("best").innerText =
+      `🏆 Kỷ lục: ${bestTime} ms`;
+  }
+
+  if (reaction <= LIMIT) {
+    document.getElementById("nextBtn").style.display = "inline-block";
+  }
+}
+
+function next() {
+  location.href = "lv3.html";
+}
+
+function resetLights() {
+  [...redLights, ...yellowLights, ...greenLights]
+    .forEach(l => l.className = "light");
+}
+
+function reset() {
+  state = "idle";
+  resetLights();
+  document.getElementById("current").innerText = "";
+}
+</script>
+
+</body>
+</html>

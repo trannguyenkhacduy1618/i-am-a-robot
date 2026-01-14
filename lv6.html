@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 6</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="game">
+  <h3>LEVEL 6 – Pattern</h3>
+  <p id="pattern"></p>
+
+  <div class="choices">
+    <button onclick="choose('white')">⬜</button>
+    <button onclick="choose('black')">⬛</button>
+  </div>
+
+  <div class="note">
+    🤖 Robot chỉ so khớp quy luật, không hiểu ý nghĩa hình ảnh.
+  </div>
+</div>
+
+<script>
+// các mẫu quy luật
+const patterns = [
+  // xen kẽ
+  {
+    seq: ["⬜","⬛","⬜","⬛"],
+    answer: "⬜"
+  },
+  // 2 trắng 1 đen
+  {
+    seq: ["⬜","⬜","⬛","⬜","⬜"],
+    answer: "⬛"
+  },
+  // tăng dần
+  {
+    seq: ["⬛","⬜","⬜","⬜"],
+    answer: "⬛"
+  },
+  // lặp đôi
+  {
+    seq: ["⬜","⬜","⬛","⬛"],
+    answer: "⬜"
+  },
+  // đảo ngược
+  {
+    seq: ["⬛","⬜","⬛"],
+    answer: "⬜"
+  }
+];
+
+// chọn ngẫu nhiên 1 mẫu
+const p = patterns[Math.floor(Math.random() * patterns.length)];
+document.getElementById("pattern").innerText =
+  p.seq.join(" ") + " → ?";
+
+function choose(c) {
+  const icon = c === "white" ? "⬜" : "⬛";
+
+  if (icon === p.answer) {
+    location.href = "lv7.html";
+  } else {
+    alert("Sai quy luật → robot reject");
+  }
+}
+</script>
+
+</body>
+</html>

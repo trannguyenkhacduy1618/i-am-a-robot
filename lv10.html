@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 10</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+#stats {
+  margin-top: 10px;
+  font-size: 14px;
+}
+#timer {
+  font-size: 20px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+#ending {
+  display: none;
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #0f0;
+}
+</style>
+</head>
+<body>
+
+<div class="game">
+<h3>LEVEL 10 – Machine Precision</h3>
+<p>Nhấn nút <b>1 lần</b>, mỗi lần cách nhau <b>1000 ms ± 300 ms</b></p>
+
+<div id="timer">0 ms</div>
+
+<button onclick="clickBtn()">EXECUTE</button>
+
+<p id="count">0 / 1</p>
+
+<div id="stats">
+❌ Lỗi: <span id="fail">0</span><br>
+⏱ Chu kỳ chuẩn: 1000 ms
+</div>
+
+<div class="note">
+🤖 Robot hoạt động theo thời gian tuyệt đối.
+</div>
+
+<div id="ending">
+<h3>ENDING</h3>
+<p>
+Chuỗi hành vi của bạn ổn định và chính xác.<br>
+<strong>KẾT LUẬN:</strong> Bạn đã hành xử như một ROBOT 🤖
+</p>
+</div>
+</div>
+
+<script>
+let step = 0;
+let startTime = null;
+let timerInterval = null;
+
+const REQUIRED = 1000;
+const TOLERANCE = 300;
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (startTime !== null) {
+      const elapsed = Math.round(performance.now() - startTime);
+      document.getElementById("timer").innerText = elapsed + " ms";
+    }
+  }, 16);
+}
+
+function clickBtn() {
+  const now = performance.now();
+
+  // lần 1: bắt đầu đo
+  if (step === 0) {
+    startTime = now;
+    step = 1;
+    startTimer();
+    document.getElementById("count").innerText = "1 / 1";
+    return;
+  }
+
+  // lần 2: kiểm tra
+  const elapsed = now - startTime;
+  clearInterval(timerInterval);
+
+  if (Math.abs(elapsed - REQUIRED) <= TOLERANCE) {
+    finish();
+  } else {
+    alert("Sai chu kỳ → hệ thống reset");
+    reset();
+  }
+}
+
+function reset() {
+  step = 0;
+  startTime = null;
+  document.getElementById("count").innerText = "0 / 1";
+  document.getElementById("timer").innerText = "0 ms";
+  clearInterval(timerInterval);
+}
+
+function finish() {
+  document.querySelector("button").disabled = true;
+  document.getElementById("ending").style.display = "block";
+}
+</script>
+
+
+</body>
+</html>

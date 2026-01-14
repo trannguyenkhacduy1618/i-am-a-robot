@@ -1,0 +1,30 @@
+<script>
+let min, max;
+
+function randomThreshold() {
+    // sinh ngẫu nhiên vùng xanh rộng 10
+    min = Math.floor(Math.random() * 80) + 5; // 5 → 85
+    max = min + 10;
+
+    // cập nhật vị trí vùng xanh
+    const barWidth = 260; // phải khớp CSS
+    const left = (min / 100) * barWidth;
+    const width = ((max - min) / 100) * barWidth;
+
+    const zone = document.querySelector(".green-zone");
+    zone.style.left = left + "px";
+    zone.style.width = width + "px";
+}
+
+function check() {
+    let v = document.getElementById("r").value;
+    if (v >= min && v <= max) {
+        location.href = "lv6.html";
+    } else {
+        alert("Ngoài ngưỡng");
+    }
+}
+
+// chạy ngay khi load level
+randomThreshold();
+</script>

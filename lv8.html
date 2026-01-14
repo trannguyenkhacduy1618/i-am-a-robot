@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 8</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="game">
+<h3>LEVEL 8 – Logic Gate</h3>
+<p id="expr"></p>
+
+<button onclick="answer(true)">TRUE</button>
+<button onclick="answer(false)">FALSE</button>
+
+<div class="note">
+🤖 Robot chỉ hiểu logic Boolean.
+</div>
+</div>
+
+<script>
+let correct;
+
+function randBool() {
+  return Math.random() < 0.5;
+}
+
+function gen() {
+  const a = randBool();
+  const b = randBool();
+  const ops = ["AND", "OR"];
+  const op = ops[Math.floor(Math.random() * ops.length)];
+
+  if (op === "AND") correct = a && b;
+  if (op === "OR") correct = a || b;
+
+  document.getElementById("expr").innerText =
+    `${a} ${op} ${b} = ?`;
+}
+
+function answer(v) {
+  if (v === correct) {
+    location.href = "lv9.html";
+  } else {
+    alert("Sai logic");
+    gen();
+  }
+}
+
+gen();
+</script>
+
+</body>
+</html>
